@@ -39,7 +39,6 @@ public class AuthService {
                         loginDto.getPassword()
                 )
         );
-
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         return jwtUtil.generateToken(userDetails);
     }
