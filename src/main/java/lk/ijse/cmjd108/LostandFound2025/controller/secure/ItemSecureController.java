@@ -39,4 +39,11 @@ public class ItemSecureController {
         itemSecureService.deleteItem(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Item> updateItemStatus(
+            @PathVariable Long id,
+            @RequestParam Item.Status status) {
+        return ResponseEntity.ok(itemSecureService.updateItemStatus(id, status));
+    }
 }

@@ -1,11 +1,11 @@
 package lk.ijse.cmjd108.LostandFound2025.service.impl.secure;
 
-import lk.ijse.cmjd108.LostandFound2025.dao.secure.ItemSecureRepository;
+import lk.ijse.cmjd108.LostandFound2025.dao.ItemSecureRepository;
 import lk.ijse.cmjd108.LostandFound2025.entities.secure.Item;
 import lk.ijse.cmjd108.LostandFound2025.service.secure.ItemSecureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.util.List;
+
 import java.util.Optional;
 
 @Service
@@ -38,5 +38,13 @@ public class ItemSecureServiceImpl implements ItemSecureService {
     @Override
     public void deleteItem(Long id) {
         itemSecureRepository.deleteById(id);
+    }
+
+    @Override
+    public Item updateItemStatus(Long id, Item.Status status) {
+        Item item = itemSecureRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Item not found"));
+        item.setStatus(status);
+        return itemSecureRepository.save(item);
     }
 }

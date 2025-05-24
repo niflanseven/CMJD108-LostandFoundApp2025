@@ -8,4 +8,6 @@ public interface ItemSecureService {
     Iterable<Item> getAllItems();
     Item updateItem(Long id, Item item);
     void deleteItem(Long id);
+
+    Item updateItemStatus(Long id, Item.Status status);
 }

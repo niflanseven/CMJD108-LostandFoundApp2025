@@ -1,7 +1,7 @@
 package lk.ijse.cmjd108.LostandFound2025.entities.secure;
 
-import lk.ijse.cmjd108.LostandFound2025.entities.User;
 import jakarta.persistence.*;
+import lk.ijse.cmjd108.LostandFound2025.entities.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import java.time.LocalDateTime;
