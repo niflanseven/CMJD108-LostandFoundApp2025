@@ -22,11 +22,15 @@ public class AuthService {
     private final JwtUtil jwtUtil;
 
     public String register(RegisterDto registerDto) {
+        if (userRepository.existsByEmail(registerDto.getEmail())) {
+            throw new RuntimeException("Email already exists");
+        }
+
         User user = new User();
         user.setName(registerDto.getName());
         user.setEmail(registerDto.getEmail());
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        user.setRole(User.Role.valueOf(registerDto.getRole().toUpperCase()));
+        user.setRole(User.Role.valueOf(registerDto.getRole()));
 
         userRepository.save(user);
         return "User registered successfully";
@@ -39,6 +43,7 @@ public class AuthService {
                         loginDto.getPassword()
                 )
         );
+
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         return jwtUtil.generateToken(userDetails);
     }

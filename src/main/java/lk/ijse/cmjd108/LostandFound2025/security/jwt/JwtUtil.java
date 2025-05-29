@@ -1,8 +1,11 @@
 package lk.ijse.cmjd108.LostandFound2025.security.jwt;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,8 +13,10 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
-    private final String SECRET_KEY = "cmjd108-secret-key";
-    private final long EXPIRATION_TIME = 864_000_000; // 10 days
+    // Use the generated base64 secret
+    private static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+
+    private static final long EXPIRATION_TIME = 864_000_000; // 10 days
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();

@@ -4,7 +4,9 @@ import lk.ijse.cmjd108.LostandFound2025.dto.LoginDto;
 import lk.ijse.cmjd108.LostandFound2025.dto.RegisterDto;
 import lk.ijse.cmjd108.LostandFound2025.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,7 +21,12 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
-        return ResponseEntity.ok(authService.login(loginDto));
+    public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
+        try {
+            String token = authService.login(loginDto);
+            return ResponseEntity.ok().body(token); // Return raw string
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        }
     }
 }
